@@ -12,27 +12,17 @@ use App\Models\User;
 class ProductController extends Controller
 {
     public function index(Request $request)
-{
-    $query = Product::query();
-    if ($request->has('search')) {
-        $search = $request->search;
-        $query->where('name', 'LIKE', '%' . $search . '%')->orWhere('description', 'LIKE', '%' . $search . '%')->orWhere('price', 'LIKE', '%' . $search . '%');
+    {
+        $query = Product::query();
+
+        if ($request->has('search')) {
+            $query->where('name', 'LIKE', '%' . $request->search . '%')->orWhere('price', 'LIKE', '%' . $request->search . '%');
+        }
+
+        $products = $query->latest()->get();
+
+        return view('admin.dashboard_admin', compact('products'));
     }
-    $products = $query->latest()->get();
-    $totalProducts = Product::count();
-    $totalOrders = Order::count();
-    $totalRevenue = Order::where('status', 'completed')->sum('grand_total');
-    $totalCustomers = User::where('role', 'user')->count();
-
-    return view('admin.dashboard_admin', compact(
-        'products',
-        'totalProducts',
-        'totalOrders',
-        'totalRevenue',
-        'totalCustomers'
-    ));
-}
-
     public function create()
     {
         $categories = Category::all();

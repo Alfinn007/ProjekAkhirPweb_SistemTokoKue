@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
+<div class="max-w-7xl mx-auto my-10">
 
     <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
 

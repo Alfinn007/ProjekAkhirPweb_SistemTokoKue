@@ -11,9 +11,28 @@
         @if(Auth::user()->role == 'admin')
             <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'text-[#6a5af9]' : 'text-[#555]' }} font-medium hover:text-[#6a5af9] transition">Produk</a></li>
             <li>
+                <a href="{{ Auth::user()->role == 'admin' ? route('admin.home') : route('customer.dashboard') }}"
+                    class="{{ request()->routeIs('admin.home') || request()->routeIs('customer.dashboard') ? 'text-[#6a5af9]' : 'text-[#555]' }} font-medium hover:text-[#6a5af9] transition">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('categories.index') }}"
+                    class="{{ request()->routeIs('categories.index') ? 'text-[#6a5af9]' : 'text-[#555]' }} font-medium hover:text-[#6a5af9] transition">Kategori
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.orders.index') }}"
                     class="{{ request()->routeIs('admin.orders.index') ? 'text-[#6a5af9]' : 'text-[#555]' }} font-medium hover:text-[#6a5af9] transition">
                     Pesanan Masuk
+                    @php
+                        $pendingOrders = \App\Models\Order::where('status', 'pending')->count();
+                    @endphp
+                    @if($pendingOrders > 0)
+                        <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm animate-pulse">
+                            {{ $pendingOrders }}
+                        </span>
+                    @endif
                 </a>
             </li>
 

@@ -9,6 +9,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CartController;
 use App\Http\Middleware\CheckAdmin;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () { return redirect()->route('login'); });
 
@@ -29,6 +31,7 @@ Route::middleware(['auth', CheckAdmin::class])->group(function () {
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     Route::get('/admin/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/admin/orders/{order}', [AdminOrderController::class, 'show'])->name('admin.orders.show');
     Route::put('/admin/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
 });
 
@@ -47,4 +50,23 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/orders', [OrderController::class, 'index'])->name('customer.orders');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+});
+
+Route::middleware(['auth', CheckAdmin::class])->group(function () {
+
+    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories.index');
+    Route::post('/categories', [AdminCategoryController::class, 'store'])->name('categories.store');
+    Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
+
+});
+
+Route::middleware(['auth', CheckAdmin::class])->group(function () {
+
+    Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.dashboard');
+});
+
+Route::middleware(['auth', CheckAdmin::class])->group(function () {
+
+    Route::get('/admin/report/pdf', [AdminOrderController::class, 'exportPdf'])->name('admin.report.pdf');
 });

@@ -42,7 +42,7 @@
                 <label class="block mb-1 font-semibold text-[#555] text-sm">Kategori</label>
                 <select name="category_id"
                     class="w-full border-b-2 border-[#e0e0e0] py-2 text-base focus:outline-none focus:border-[#c63f3f] bg-transparent transition-colors cursor-pointer">
-                    <option value="">-- Pilih Kategori (Opsional) --</option>
+                    <option value="">Kategori</option>
                         @foreach($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
