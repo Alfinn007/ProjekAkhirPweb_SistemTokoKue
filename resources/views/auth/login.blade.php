@@ -57,7 +57,7 @@
                 @csrf
 
                 <div class="mb-6">
-                    <label for="email" class="block mb-2 font-semibold text-[#555] text-sm">Username or Email</label>
+                    <label for="email" class="block mb-2 font-semibold text-[#555] text-sm">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" required autofocus
                             class="w-full border-b-2 border-[#e0e0e0] py-2 text-base transition-colors duration-300 focus:outline-none focus:border-[#c63f3f] placeholder-gray-400 text-black">
                 </div>
